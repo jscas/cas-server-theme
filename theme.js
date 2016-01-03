@@ -88,18 +88,6 @@ module.exports.postInit = function postInit(context) {
     }
 
     server.route({
-      path: '/theme/normalize.css',
-      method: 'GET',
-      handler: {
-        file: {
-          path: path.join(
-            __dirname, 'node_modules', 'normalize.css', 'normalize.css'
-          )
-        }
-      }
-    });
-
-    server.route({
       path: '/theme/concise.css',
       method: 'GET',
       handler: {

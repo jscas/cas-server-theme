@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Central Authentication Service</title>
-  <link href="/theme/normalize.css" rel="stylesheet" type="text/css">
   <link href="/theme/concise.css" rel="stylesheet" type="text/css">
 </head>
 <body>
