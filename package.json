@@ -1,0 +1,29 @@
+{
+  "name": "cas-server-theme",
+  "version": "0.1.0",
+  "description": "Provides a web interface for the interactive portions of cas-server",
+  "main": "theme.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cas-server",
+    "cas",
+    "apereo",
+    "jasig"
+  ],
+  "homepage": "https://github.com/jscas/cas-server-theme",
+  "bugs": "https://github.com/jscas/cas-server-theme/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jscas/cas-server-theme.git"
+  },
+  "author": "James Sumners",
+  "license": "MIT",
+  "dependencies": {
+    "concise.css": "^3.1.1",
+    "handlebars": "^4.0.5",
+    "inert": "^3.2.0",
+    "normalize.css": "^3.0.3"
+  }
+}

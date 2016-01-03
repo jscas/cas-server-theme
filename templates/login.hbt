@@ -1,0 +1,35 @@
+{{> header }}
+
+<div column="6 +3">
+  <form target="/login" method="post">
+    <fieldset>
+      <p>
+        <label for="username">Username</label>
+        <input id="username"
+               class="input--large"
+               name="username"
+               placeholder="username"
+               autocomplete="off">
+      </p>
+
+      <p>
+        <label for="password">Password</label>
+        <input id="password"
+               class="input--large"
+               name="password"
+               placeholder="password"
+               type="password"
+               autocomplete="off">
+      </p>
+
+      <input type="submit" value="login">
+
+    </fieldset>
+
+    <input name="lt" type="hidden" value="{{lt}}">
+    <input name="service" type="hidden" value="{{service}}">
+
+  </form>
+</div>
+
+{{> footer }}
