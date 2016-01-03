@@ -12,6 +12,7 @@ let log;
 const fs = require('fs');
 const path = require('path');
 const Handlebars = require(path.join(__dirname, 'lib', 'handlebars'));
+const gmf = require('get-module-file');
 
 // loads a template file and runs it through Handlebars.compile
 function templateLoader(tmplName) {
@@ -92,9 +93,7 @@ module.exports.postInit = function postInit(context) {
       method: 'GET',
       handler: {
         file: {
-          path: path.join(
-            __dirname, 'node_modules', 'concise.css', 'dist', 'concise.css'
-          )
+          path: gmf.sync(__dirname, 'concise.css', '/dist/concise.css')
         }
       }
     });
