@@ -1,0 +1,3 @@
+<div column="10 +1">
+  <p>Redirecting you to <a href="{{service}}?ticket={{ticket}}">{{service}}</a> in 5 seconds.</p>
+</div>

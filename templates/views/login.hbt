@@ -1,5 +1,3 @@
-{{> header }}
-
 <div column="6 +3">
   <form target="/login" method="post">
     <fieldset>
@@ -31,5 +29,3 @@
 
   </form>
 </div>
-
-{{> footer }}

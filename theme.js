@@ -14,12 +14,22 @@ const path = require('path');
 const Handlebars = require(path.join(__dirname, 'lib', 'handlebars'));
 const gmf = require('get-module-file');
 
+const templatesPath = path.join(__dirname, 'templates');
+const viewsPath = path.join(templatesPath, 'views');
+
+const defaultLayout = (function() {
+  const layoutBuf = fs.readFileSync(
+    path.join(templatesPath, 'layouts', 'default.hbt')
+  );
+  return Handlebars.compile(layoutBuf.toString());
+}());
+
 // loads a template file and runs it through Handlebars.compile
 function templateLoader(tmplName) {
   function promise(resolve, reject) {
     try {
       const tmplBuf = fs.readFileSync(
-        path.join(__dirname, 'templates', `${tmplName}.hbt`)
+        path.join(viewsPath, `${tmplName}.hbt`)
       );
       const tmpl = Handlebars.compile(tmplBuf.toString());
       return resolve(tmpl);
@@ -31,24 +41,6 @@ function templateLoader(tmplName) {
   return new Promise(promise);
 }
 
-// wraps the template function returned by Handlebars.compile
-function compile(context) {
-  function promise(resolve, reject) {
-    try {
-      // jshint -W040
-      const compiled = this(context);
-      return resolve(compiled);
-    } catch (e) {
-      return reject(e);
-    }
-  }
-
-  return new Promise(
-    // jshint -W040
-    promise.bind(this)
-  );
-}
-
 const pages = {
   login: function(){},
   logout: function(){},
@@ -56,18 +48,30 @@ const pages = {
   noService: function(){}
 };
 
-function loaderResolve(c) {
+function loaderResolve(compiler) {
   // jshint -W040
-  pages[this] = compile.bind(c);
+  pages[this] = function(context) {
+    const _context = {};
+    _context.mainContent = compiler(context);
+
+    let compiled;
+    try {
+      compiled = defaultLayout(_context);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+
+    return Promise.resolve(compiled);
+  };
 }
-function loaderCaught(e) {
+function loaderCaught(error) {
   // jshint -W040
-  pages[this] = Promise.reject.bind(e);
+  pages[this] = Promise.reject.bind(error);
 }
-for (let t of Object.keys(pages)) {
-  templateLoader(t)
-    .then(loaderResolve.bind(t))
-    .catch(loaderCaught.bind(t));
+for (let page of Object.keys(pages)) {
+  templateLoader(page)
+    .then(loaderResolve.bind(page))
+    .catch(loaderCaught.bind(page));
 }
 
 module.exports.name = 'defaultTheme';

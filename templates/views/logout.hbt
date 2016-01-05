@@ -1,7 +1,3 @@
-{{> header }}
-
 <div column="10 +1">
   <p class="h3 text--success">You have been logged out.</p>
 </div>
-
-{{> footer }}
