@@ -42,10 +42,12 @@ function templateLoader(tmplName) {
 }
 
 const pages = {
+  internalError: function(){},
   login: function(){},
-  logout: function(){},
   loginRedirect: function(){},
-  noService: function(){}
+  logout: function(){},
+  noService: function(){},
+  unauthorized: function(){},
 };
 
 function loaderResolve(compiler) {
@@ -92,17 +94,7 @@ module.exports.postInit = function postInit(context) {
       return;
     }
 
-    server.route({
-      path: '/theme/concise.css',
-      method: 'GET',
-      handler: {
-        file: {
-          path: gmf.sync(__dirname, 'concise.css', '/dist/concise.css')
-        }
-      }
-    });
-
-    const routes = require('./routes');
+    const routes = require(path.join(__dirname, 'routes'));
     log.debug('theme routes: %j', routes);
     server.route(routes);
   });

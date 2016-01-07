@@ -1,4 +1,2 @@
-<div column="10 +1">
-  <h2>Success</h2>
-  <p>You have successfully authenticated.</p>
-</div>
+<h2>Success</h2>
+<p>You have successfully authenticated.</p>

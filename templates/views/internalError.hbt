@@ -1,0 +1,4 @@
+<div class="h3">
+  <p>We're sorry. An unexpected error has occurred.</p>
+  <p class="text--error">Error: {{errorMessage}}</p>
+</div>

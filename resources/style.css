@@ -1,0 +1,17 @@
+body {
+  background: #2E799B;
+}
+
+form {
+  background: #4990B0;
+}
+
+.content-bg {
+  background: #FFEAAA;
+  border-left: solid #A3D1E6;
+  border-right: solid #A3D1E6;
+}
+
+.border-bot {
+  border-bottom: solid #A3D1E6;
+}
