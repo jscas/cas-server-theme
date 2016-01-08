@@ -26,5 +26,13 @@
 
   <input name="lt" type="hidden" value="{{lt}}">
   <input name="service" type="hidden" value="{{service}}">
-
 </form>
+
+
+{{#if errorMessage}}
+<div class="alert alert--error">
+  <a href="" class="alert-close">&times;</a>
+  <p>Authentication Failed</p>
+  <p>Error: {{errorMessage}}</p>
+</div>
+{{/if}}
