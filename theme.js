@@ -1,21 +1,12 @@
 'use strict';
 
-// This is more complicated that it needs to be since Handlebars is a
-// synchronous compiler, but the plugin API mandates that a plugin's exported
-// methods return promises. That's not a bad thing; it will allow for other
-// templating engines, like Marko, that support streaming or asynchronous
-// compilation.
-
 let conf;
 let log;
 
 const fs = require('fs');
 const path = require('path');
 const marko = require('marko');
-
 const markoCompiler = require('marko/compiler');
-markoCompiler.defaultOptions.writeToDisk = false;
-markoCompiler.defaultOptions.checkUpToDate = true;
 
 const templatesPath = path.join(__dirname, 'templates');
 const pages = {
@@ -29,8 +20,19 @@ const pages = {
 
 module.exports.name = 'defaultTheme';
 module.exports.plugin = function plugin(options, context) {
-  conf = options;
+  conf = Object.assign(
+    {
+      marko: {
+        writeToDisk: false,
+        checkUpToDate: true
+      }
+    },
+    options
+  );
   log = context.logger;
+
+  markoCompiler.defaultOptions.writeToDisk = conf.marko.writeToDisk;
+  markoCompiler.defaultOptions.checkUpToDate = conf.marko.checkUpToDate;
 
   try {
     const layout =
