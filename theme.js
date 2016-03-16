@@ -12,8 +12,12 @@ let log;
 const fs = require('fs');
 const path = require('path');
 const marko = require('marko');
-const templatesPath = path.join(__dirname, 'templates');
 
+const markoCompiler = require('marko/compiler');
+markoCompiler.defaultOptions.writeToDisk = false;
+markoCompiler.defaultOptions.checkUpToDate = true;
+
+const templatesPath = path.join(__dirname, 'templates');
 const pages = {
   internalError: function(){},
   login: function(){},
