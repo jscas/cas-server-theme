@@ -1,4 +1,4 @@
-<p>Upon login you will be redirected to <strong>{{service}}</strong>.</p>
+<p>Upon login you will be redirected to <strong>${data.service}</strong>.</p>
 <form target="/login" method="post">
   <fieldset>
     <p>
@@ -24,15 +24,12 @@
 
   </fieldset>
 
-  <input name="lt" type="hidden" value="{{lt}}">
-  <input name="service" type="hidden" value="{{service}}">
+  <input name="lt" type="hidden" value="${data.lt}">
+  <input name="service" type="hidden" value="${data.service}">
 </form>
 
-
-{{#if errorMessage}}
-<div class="alert alert--error">
+<div if(data.errorMessage) class="alert alert--error">
   <a href="" class="alert-close">&times;</a>
   <p>Authentication Failed</p>
-  <p>Error: {{errorMessage}}</p>
+  <p>Error: ${data.errorMessage}</p>
 </div>
-{{/if}}

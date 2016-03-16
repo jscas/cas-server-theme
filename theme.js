@@ -11,35 +11,8 @@ let log;
 
 const fs = require('fs');
 const path = require('path');
-const Handlebars = require(path.join(__dirname, 'lib', 'handlebars'));
-const gmf = require('get-module-file');
-
+const marko = require('marko');
 const templatesPath = path.join(__dirname, 'templates');
-const viewsPath = path.join(templatesPath, 'views');
-
-const defaultLayout = (function() {
-  const layoutBuf = fs.readFileSync(
-    path.join(templatesPath, 'layouts', 'default.hbt')
-  );
-  return Handlebars.compile(layoutBuf.toString());
-}());
-
-// loads a template file and runs it through Handlebars.compile
-function templateLoader(tmplName) {
-  function promise(resolve, reject) {
-    try {
-      const tmplBuf = fs.readFileSync(
-        path.join(viewsPath, `${tmplName}.hbt`)
-      );
-      const tmpl = Handlebars.compile(tmplBuf.toString());
-      return resolve(tmpl);
-    } catch (e) {
-      return reject(e);
-    }
-  }
-
-  return new Promise(promise);
-}
 
 const pages = {
   internalError: function(){},
@@ -47,39 +20,40 @@ const pages = {
   loginRedirect: function(){},
   logout: function(){},
   noService: function(){},
-  unauthorized: function(){},
+  unauthorized: function(){}
 };
-
-function loaderResolve(compiler) {
-  // jshint -W040
-  pages[this] = function(context) {
-    const _context = {};
-    _context.mainContent = compiler(context);
-
-    let compiled;
-    try {
-      compiled = defaultLayout(_context);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-
-    return Promise.resolve(compiled);
-  };
-}
-function loaderCaught(error) {
-  // jshint -W040
-  pages[this] = Promise.reject.bind(error);
-}
-for (let page of Object.keys(pages)) {
-  templateLoader(page)
-    .then(loaderResolve.bind(page))
-    .catch(loaderCaught.bind(page));
-}
 
 module.exports.name = 'defaultTheme';
 module.exports.plugin = function plugin(options, context) {
   conf = options;
   log = context.logger;
+
+  try {
+    const layout =
+      marko.load(path.join(templatesPath, 'layouts', 'default.marko'));
+
+    for (let p of Object.keys(pages)) {
+      pages[p] = function pageRenderer(context) {
+        log.debug('rendering %s page: %j', p, context);
+        const _context = {
+          mainContent: pages[p].template
+        };
+        try {
+          const result = layout.renderSync(Object.assign({}, _context, context));
+          log.debug('rendering complete');
+          return Promise.resolve(result);
+        } catch (e) {
+          log.debug('rendering failed: %j', e);
+          return Promise.reject(e);
+        }
+      };
+
+      pages[p].template =
+        marko.load(path.join(templatesPath, 'views', `${p}.marko`));
+    }
+  } catch (e) {
+    return Promise.reject(e);
+  }
 
   return pages;
 };
