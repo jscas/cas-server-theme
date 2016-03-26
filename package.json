@@ -1,6 +1,6 @@
 {
   "name": "cas-server-theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides a web interface for the interactive portions of cas-server",
   "main": "theme.js",
   "scripts": {
