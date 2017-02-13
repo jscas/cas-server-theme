@@ -45,7 +45,7 @@ module.exports.plugin = function plugin(options, context) {
           mainContent: pages[p].template
         };
         try {
-          const result = layout.renderSync(Object.assign({}, _context, context));
+          const result = layout.renderToString(Object.assign({}, _context, context));
           log.debug('rendering complete');
           return Promise.resolve(result);
         } catch (e) {

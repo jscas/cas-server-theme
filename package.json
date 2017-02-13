@@ -21,15 +21,15 @@
   "author": "James Sumners",
   "license": "MIT",
   "dependencies": {
-    "concise.css": "^3.1.1",
+    "concise.css": "^4.1.2",
     "get-module-file": "^0.1.0",
-    "inert": "^3.2.0",
-    "marko": "^3.0.0"
+    "inert": "^4.1.0",
+    "marko": "^3.14.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "cheerio": "^0.20.0",
-    "mocha": "^2.4.5",
-    "rimraf": "^2.5.2"
+    "cheerio": "^0.22.0",
+    "mocha": "^3.2.0",
+    "rimraf": "^2.5.4"
   }
 }
