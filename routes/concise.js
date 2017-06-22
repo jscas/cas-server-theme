@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-//const path = require('path');
-const gmf = require('get-module-file');
+// const path = require('path');
+const gmf = require('get-module-file')
 
 const route = {
   path: '/theme/concise.css',
@@ -11,6 +11,6 @@ const route = {
       path: gmf.sync(__dirname, 'concise.css', '/dist/concise.css')
     }
   }
-};
+}
 
-module.exports = [route];
+module.exports = [route]

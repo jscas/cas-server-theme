@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const resources = path.resolve(path.join(__dirname, '..', 'resources'));
+const path = require('path')
+const resources = path.resolve(path.join(__dirname, '..', 'resources'))
 
 const route = {
   method: 'GET',
@@ -11,6 +11,6 @@ const route = {
       path: resources
     }
   }
-};
+}
 
-module.exports = [route];
+module.exports = [route]
