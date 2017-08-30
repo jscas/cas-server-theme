@@ -1,6 +1,5 @@
 'use strict'
 
-// const path = require('path');
 const gmf = require('get-module-file')
 
 const route = {
